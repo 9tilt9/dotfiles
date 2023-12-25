@@ -1,0 +1,40 @@
+#!/bin/bash
+
+#Select from files in the .wallpaper folder
+#
+files=( "$HOME/.wallpaper/"*)
+
+PS3='Select Wallpaper or 0 to cancel :'
+select file in "${files[@]}"; do 
+	if [[ $REPLY == "0" ]]; then
+		echo 'Caedrel' >&2
+		exit
+	elif [[ -z $file ]]; then 
+		echo 'Invalid choice' >&2
+	else
+		break
+	fi
+done
+
+#preload wallpaper
+hyprctl hyprpaper preload $file
+
+#Load wallpaper from the selection on monitor eDP-1
+hyprctl hyprpaper wallpaper "eDP-1,$file"
+
+#Reload pywal with the image on path $file
+wal -i $file
+
+#reload waybar and unlink from terminal
+killall waybar
+waybar & disown
+
+#reload zathura colors
+zathura-pywal
+
+#unload unused wallpapers
+hyprctl hyprpaper unload all
+
+#using StreamEditor replace the path of the current wallpaper
+#with the path of the new one in var $file
+sed -i -r 's|\/(.+\/)*(.+)\/.(.+)|'"$file"'|g' ~/.config/hypr/hyprpaper.conf

@@ -1,0 +1,35 @@
+#!/bin/bash
+
+#selection with wofi in dmenu mode
+#sed1 selects only the file name sed2 capitalizes first letter
+tmp=$(ls $HOME/.wallpaper/* | sed -rn "s|(.*\/)(\w+)(.\w{3})|\2|p" | sed -e "s/\b\(.\)/\u\1/g" | wofi -i -d)
+tmp="${tmp,}\."
+
+file=$(ls $HOME/.wallpaper/* | grep -P $tmp)
+
+#length of tmp without file is 2 -> only execute if tmp has filename assigned
+if [ ${#tmp} -gt 2 ]
+then
+#preload wallpaper
+hyprctl hyprpaper preload $file
+
+#Load wallpaper from the selection on monitor eDP-1
+hyprctl hyprpaper wallpaper "eDP-1,$file"
+
+#Reload pywal with the image on path $file
+wal -i $file
+
+#reload waybar and unlink from terminal
+killall waybar
+waybar & disown
+
+#reload zathura colors
+zathura-pywal
+
+#unload unused wallpapers
+hyprctl hyprpaper unload all
+
+#using StreamEditor replace the path of the current wallpaper
+#with the path of the new one in var $file
+sed -i -r 's|\/(.+\/)*(.+)\/.(.+)|'"$file"'|g' ~/.config/hypr/hyprpaper.conf
+fi
