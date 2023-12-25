@@ -1,0 +1,66 @@
+{
+    "layer": "top",
+    "position": "top",
+    "mod": "dock",
+    "exclusive": true,
+    "passthrough": false,
+    "gtk-layer-shell": true,
+    "height": 0,
+    "modules-left": [
+        "hyprland/workspaces"
+    ],
+    "modules-center": ["hyprland/window"],
+    "modules-right": [
+        "network",
+	"battery",
+        "backlight",
+	"clock"
+    ],
+
+    "hyprland/window": {
+        "format": "{}"
+    },
+    "hyprland/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "on-click": "activate",
+        "format-icons": {
+		"1": "",
+		"2": "",
+		"3": "",
+		"4": "",
+		"urgent": "",
+		"active": "",
+		"default": ""	
+	}
+        },
+   "clock": {
+        "format": "{: %R}",
+        "tooltip-format": "{: %R   %d/%m}"
+    },
+    "backlight": {
+        "device": "intel_backlight",
+        "format": "{icon} {percent}%",
+        "format-icons": [""],
+	"on-scroll-up": "brightnessctl set 1%+",
+        "on-scroll-down": "brightnessctl set 1%-"
+    },
+    "battery": {
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 20
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["","","","",""]
+	},
+    "network": {
+	"interface": "wlan0",
+	"format-wifi": " ",    
+	"format-disconnected":"!",
+	"tooltip-format": "{essid}",
+    },
+}
