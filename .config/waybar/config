@@ -38,9 +38,9 @@
 
 
     "custom/wlogout": {
-	"format": "<span size='100%'></span>",
+	"format": "<span size='90%'></span>",
 	"interval": "once",
-	"on-click": "wlogout",	
+	"on-click": "wlogout -b 2",	
     },
   
     "clock": {
@@ -49,8 +49,7 @@
     },
     "backlight": {
         "device": "intel_backlight",
-        "format": "{icon} {percent}%",
-        "format-icons": [""],
+        "format": "<span size='90%'> </span>{percent}%",
 	"on-scroll-up": "brightnessctl set 1%+",
         "on-scroll-down": "brightnessctl set 1%-"
     },

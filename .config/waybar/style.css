@@ -44,6 +44,8 @@ window#waybar.empty #window {
     background: @color1;
     color: @color5;
     border-radius: 10px;
+    box-shadow: inherit;
+    text-shadow: inherit;
 }
 
 #network,
